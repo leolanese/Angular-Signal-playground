@@ -1,0 +1,7 @@
+# Browsers we actively support
+chrome >= 80   # Target the latest 2 major versions
+firefox >= 60  # Target the latest 2 major versions
+safari >= 13   # Target the latest major version
+
+# Browsers with significant usage (consider for polyfills)
+not dead        # Include browsers that are not officially dead

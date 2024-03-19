@@ -1,0 +1,51 @@
+@use './../../../vy_Corporate_colours' as colours;
+
+$form-color: #007bff;
+$form-hover-color: #0056b3;
+
+.table-wrapper {
+    display: grid;
+    overflow-x: auto;
+    max-width: 100%;
+}
+  
+.styled-table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid colours.$vy_black;
+  
+    th {
+      border: 1px solid colours.$vy_extra_dark_purple;
+      padding: .5em;
+      text-align: left;
+    }
+  }
+ 
+form {
+    display: flex;
+}
+
+input[type="text"], 
+input[type="date"] {
+    width: calc(100% - 20px);
+  
+    &::placeholder {
+      color: colours.$vy_extra_dark_purple;
+    }
+  }
+  
+input[type="submit"] {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: $form-color;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: $form-hover-color;
+    }
+  }

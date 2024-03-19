@@ -1,0 +1,51 @@
+<h1>
+  {{ pageTitle }}
+</h1>
+
+<form [formGroup]="filterForm">
+  <select formControlName="status" (change)="onStatusChanged($event.target.value)">
+    <option [ngValue]="null" disabled>Select Status</option>
+    @for(status of statusValues; track status) {
+      <option [ngValue]="status">{{ status }}</option>
+    }   
+  </select>
+
+  <input type="date" (change)="onDateChanged($event.target.value)">
+</form>
+
+<ng-container *ngIf="!filteredTransactionsSignal">Loading...</ng-container>
+
+<ng-container class="alert alert-danger mt-3" *ngIf="ChildEmptyMessage.length === 0">
+  {{ ChildEmptyMessage }}
+</ng-container>
+
+<ng-container class="card-body" *ngIf="filteredTransactionsSignal()?.length">
+  <div class="table-wrapper">
+    <table class="table styled-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Amount</th>
+          <th>Currency</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of filteredTransactionsSignal(); trackBy: trackByStatus" 
+            class="table-row" 
+            (click)="onSelectedTransactionFromList(transaction.id)">
+          <td><span class="fw-bold">{{ transaction?.id ?? '-' }}</span></td>
+          <td>{{ transaction?.amount ?? '-' }}</td>
+          <td>{{ transaction?.currency ?? '-' }}</td>
+          <td>{{ transaction?.description ?? '-' }}</td>
+          <td>{{ transaction?.status ?? '-' }}</td>
+          <td>{{ transaction?.createdAt | date: 'medium' ?? '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+
