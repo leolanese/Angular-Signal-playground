@@ -43,7 +43,7 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit(): void {
     // transform back to Signal, after passing it 
-    this.ChildSignalTransactionsFromObservable = toSignal(this.ChildTransactions$)
+    this.ChildSignalTransactionsFromObservable = toSignal(this.ChildTransactions$, {rejectErrors: true}) as Signal<any> | undefined;
   }
 
   // Observable table
@@ -52,8 +52,8 @@ export class TransactionListComponent implements OnInit {
     catchError(() => throwError(() => new Error('Error getting transactions')))
   );
 
-  // Signal
-  //filteredTransactionsSignal = toSignal(this.myData$)
+  // from observable tp Signal
+  filteredTransactionsFromObservableToSignal = toSignal(this.childData$, {rejectErrors: true}) as Signal<any> | undefined;
 
   onStatusChanged(selectedStatus: string): void {
     console.log('Status filter changed in child: ', selectedStatus);
