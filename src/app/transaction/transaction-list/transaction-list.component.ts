@@ -1,11 +1,12 @@
 import { Transaction, Transactions } from './../../models/vy-models';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Signal, computed, inject } from '@angular/core';
 import { NgFor, NgClass, NgIf, CommonModule } from '@angular/common';
 import { ApiTransactionService } from '../../services/api-transaction.service';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Observable, Subscription, of, from, catchError, throwError, tap} from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
+
 @Component({
   selector: 'vy-transaction-list',
   standalone: true,
@@ -14,15 +15,19 @@ import { toSignal } from '@angular/core/rxjs-interop';
   templateUrl: './transaction-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TransactionListComponent {
+export class TransactionListComponent implements OnInit {
   pageTitle = 'Transaction List';
   filterForm: FormGroup;
   statusValues: string[] = ['CREATED', 'FAILED', 'SETTLED', 'COMPLETED', 'CAPTURED'];
   selectedDate: Date | null = null;
   selectedStatus: string | null = '';
 
-  @Input() ChildTransactions: Transaction[] = [];
+  ChildSignalTransactionsFromObservable: Signal<any> | undefined;
+
   @Input() ChildEmptyMessage: string = '';
+  @Input() ChildTransactions$: Observable<any[]> | undefined;
+
+  @Input() ChildSignalTransactions: Observable<any> | undefined;
   
   @Output() ChildStatusChanged = new EventEmitter<string>();
   @Output() ChildDateChanged = new EventEmitter<string>();
@@ -36,8 +41,13 @@ export class TransactionListComponent {
     });
   }
 
+  ngOnInit(): void {
+    // transform back to Signal, after passing it 
+    this.ChildSignalTransactionsFromObservable = toSignal(this.ChildTransactions$)
+  }
+
   // Observable table
-  myData$ = from(this.transactionService.getFilteredTransactions(1, 5, 'CANCEL', '')).pipe(
+  childData$ = from(this.transactionService.getFilteredTransactions(1, 5, 'CANCEL', '')).pipe(
     tap(data => console.log('Data from service:', data)),
     catchError(() => throwError(() => new Error('Error getting transactions')))
   );

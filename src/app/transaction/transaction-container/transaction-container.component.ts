@@ -1,8 +1,8 @@
 import { Transaction } from './../../models/vy-models';
-import { ChangeDetectionStrategy, Component, OnInit, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Signal, computed, inject } from '@angular/core';
 import { TransactionListComponent } from "../transaction-list/transaction-list.component";
 import { ApiTransactionService } from '../../services/api-transaction.service';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, from, of, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'vy-transaction-container',
@@ -11,8 +11,10 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
     <div>
         <vy-transaction-list
  
-          [ChildTransactions]="ParentTransactions"
+          [ChildTransactions$]="ParentTransactions$"
           [ChildEmptyMessage]="ParentEmptyMessage"
+
+          [ChildSignalTransactions]="ParentSignalTransactions"
 
           (ChildStatusChanged)="onStatusChanged($event)"
           (ChildDateChanged)="onDateChanged($event)"
@@ -26,7 +28,9 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 })
 export class TransactionContainerComponent implements OnInit {
 
-  ParentTransactions: any[] = [];
+  ParentTransactions$: Observable<any> | undefined;
+  ParentSignalTransactions: Observable<any> | undefined;
+
   ParentEmptyMessage = 'Empty filter transaction message';
   ParentErrorMessage = '';
 
@@ -42,22 +46,18 @@ export class TransactionContainerComponent implements OnInit {
 
   ngOnInit(): void {
     // Call filteredTransactionsSignal to populate ParentTransactions
-    this.filteredTransactionsSignal();
+    this.getObservableTransactions();
+
+    this.getSignalTransactions()
   }
 
-  filteredTransactionsSignal = () => {
-    // TODO: Here we listen for Signal updates instead of subscribing to an observable
-    // ideally we can move this to the smart component and subscribe to the observable there to make this
-    // dummy component cleanner, but I rather keep it as is for now.
-    this.ParentTransactions = [{
-      id: 1,
-      amount: 1000,
-      status: 'SETTLED',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    }];
-    
+  getObservableTransactions = () => {
+    this.ParentTransactions$ = from(this.transactionService.getFilteredTransactions(1, 5, 'CANCEL', ''))
   };
+
+  getSignalTransactions = () => {
+    this.ParentSignalTransactions = from(this.transactionService.filteredTransactionsSignal() as any) 
+  }
 
   onStatusChanged(selectedStatus: string): void {
     console.log('Status filter changed in parent: ', selectedStatus);
