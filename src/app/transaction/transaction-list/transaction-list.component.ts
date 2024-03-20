@@ -4,7 +4,8 @@ import { NgFor, NgClass, NgIf, CommonModule } from '@angular/common';
 import { ApiTransactionService } from '../../services/api-transaction.service';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subscription, of } from 'rxjs';
+import { Observable, Subscription, of, from, catchError, throwError, tap} from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'vy-transaction-list',
   standalone: true,
@@ -35,6 +36,15 @@ export class TransactionListComponent {
     });
   }
 
+  // Observable table
+  myData$ = from(this.transactionService.getFilteredTransactions(1, 5, 'CANCEL', '')).pipe(
+    tap(data => console.log('Data from service:', data)),
+    catchError(() => throwError(() => new Error('Error getting transactions')))
+  );
+
+  // Signal
+  //filteredTransactionsSignal = toSignal(this.myData$)
+
   onStatusChanged(selectedStatus: string): void {
     console.log('Status filter changed in child: ', selectedStatus);
 
@@ -56,12 +66,12 @@ export class TransactionListComponent {
   }
 
 
+  // acted as a getter function
   filteredTransactionsSignal = () => {
     // TODO: Here we listen for Signal updates instead of subscribing to an observable
     // ideally we can move this to the smart component and subscribe to the observable there to make this
     // dummy component cleanner, but I rather keep it as is for now.
-    const transactions = this.transactionService.filteredTransactionsSignal();
-    return transactions;
+    return this.transactionService.filteredTransactionsSignal();
   };
 
   trackByStatus(index: number, item: string) {

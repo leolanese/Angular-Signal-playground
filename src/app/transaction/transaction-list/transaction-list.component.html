@@ -2,6 +2,7 @@
   {{ pageTitle }}
 </h1>
 
+
 <form [formGroup]="filterForm">
   <select formControlName="status" (change)="onStatusChanged($event.target.value)">
     <option [ngValue]="null" disabled>Select Status</option>
@@ -9,17 +10,76 @@
       <option [ngValue]="status">{{ status }}</option>
     }   
   </select>
-
   <input type="date" (change)="onDateChanged($event.target.value)">
 </form>
 
-<ng-container *ngIf="!filteredTransactionsSignal">Loading...</ng-container>
-
-<ng-container class="alert alert-danger mt-3" *ngIf="ChildEmptyMessage.length === 0">
+<h2>Parsing Table from Parent data</h2>
+<!-- This is the array of transactions passed from the parent component. 
+  You can access individual transactions and their properties using the code mentioned above. -->
+<table class="table styled-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Amount</th>
+      <th>Currency</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Created At</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="(myData$ | async) as myData">
+      <tr *ngFor="let transaction of ChildTransactions" class="table-row" (click)="onSelectedTransactionFromList(transaction.id)">
+        <td><span class="fw-bold">{{ transaction?.id ?? '-' }}</span></td>
+        <td>{{ transaction?.amount ?? '-' }}</td>
+        <td>{{ transaction?.currency ?? '-' }}</td>
+        <td>{{ transaction?.description ?? '-' }}</td>
+        <td>{{ transaction?.status ?? '-' }}</td>
+        <td>{{ transaction?.createdAt | date: 'medium' ?? '-' }}</td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+<ng-container *ngIf="!ChildTransactions?.length">
   {{ ChildEmptyMessage }}
 </ng-container>
 
-<ng-container class="card-body" *ngIf="filteredTransactionsSignal()?.length">
+
+
+<h3>Observable table data</h3>
+<ng-container class="card-body" *ngIf="myData$ | async as myData; trackBy: trackByStatus">
+  <div class="table-wrapper">
+    <table class="table styled-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Amount</th>
+          <th>Currency</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="(myData$ | async) as myData">
+          <tr *ngFor="let transaction of myData.items; trackBy: trackByStatus" class="table-row" 
+                      (click)="onSelectedTransactionFromList(transaction.id)">
+            <td><span class="fw-bold">{{ transaction?.id ?? '-' }}</span></td>
+            <td>{{ transaction?.amount ?? '-' }}</td>
+            <td>{{ transaction?.currency ?? '-' }}</td>
+            <td>{{ transaction?.description ?? '-' }}</td>
+            <td>{{ transaction?.status ?? '-' }}</td>
+            <td>{{ transaction?.createdAt | date: 'medium' ?? '-' }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+
+<h3>Signal table</h3>
+<ng-container class="card-body" *ngIf="filteredTransactionsSignal().length">
   <div class="table-wrapper">
     <table class="table styled-table">
       <thead>
@@ -48,4 +108,7 @@
   </div>
 </ng-container>
 
-
+<ng-container *ngIf="!filteredTransactionsSignal">Loading...</ng-container>
+<ng-container class="alert alert-danger mt-3" *ngIf="ChildEmptyMessage.length === 0">
+  {{ ChildEmptyMessage }}
+</ng-container>

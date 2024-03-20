@@ -16,7 +16,8 @@ export class ApiTransactionService {
     date: null
   });
 
-  private getFilteredTransactions = (page: number, pageSize: number,
+  
+  getFilteredTransactions = (page: number, pageSize: number,
                                     status: string, dates: string)
                                     : Observable<Transactions> => {
 
