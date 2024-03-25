@@ -1,22 +1,31 @@
 import { fetchEntity } from '../../services/fetchEntity';
 import { Transaction } from './../../models/vy-models';
-import { ChangeDetectionStrategy, Component, OnInit, Signal, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Signal, computed, inject, model, signal } from '@angular/core';
 import { TransactionListComponent } from "../transaction-list/transaction-list.component";
 import { ApiTransactionService } from '../../services/api-transaction.service';
 import { Observable, catchError, from, of, tap, throwError } from 'rxjs';
 import { BananaboxComponent } from '../../bananabox/bananabox.component';
 import { CommonModule } from '@angular/common';
+import { PaginationComponent } from '../../pagination/pagination.component';
+import { Html5ModelsComponent } from "../../html5-models/html5-models.component";
 
 @Component({
-  selector: 'vy-transaction-container',
-  standalone: true,
-  imports: [CommonModule, TransactionListComponent, BananaboxComponent],
-  template: `
+    selector: 'vy-transaction-container',
+    standalone: true,
+    template: `
     <div>
 
-    <h2>Entity instead Service with inject()</h2>
-    <button (click)="onTriggerEntityFetch()">Trigger Entity Fetch</button>
-    <div>{{ fetchEntity$ | async | json }}</div>
+      <app-html5-models
+          [(placeholderChild)]="placeholderSignal"
+           />
+
+      <app-pagination 
+          [(pageChild)]="currentPageSignal"
+          (pageChange)="onChange($event)" />
+ 
+      <h2>Entity instead Service with inject()</h2>
+      <button (click)="onTriggerEntityFetch($event)">Trigger Entity Fetch</button>
+      <div>{{ fetchEntity$ | async | json }}</div>
 
       <h3>Title: {{ title() }} - Counter: {{counter()}}</h3>
       <app-bananabox 
@@ -34,7 +43,9 @@ import { CommonModule } from '@angular/common';
         (ChildSelectedTransaction)="onSelectedTransactionFromList($event)" />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CommonModule, TransactionListComponent,
+        BananaboxComponent, PaginationComponent, Html5ModelsComponent]
 })
 export class TransactionContainerComponent implements OnInit {
 
@@ -52,9 +63,15 @@ export class TransactionContainerComponent implements OnInit {
   currentPage = 1;
   pageSize = 5;
 
+  // Angular effortlessly manages bidirectional data binding between components
+  // so I can even use: currentPageSignal = 1; 
+  currentPageSignal = signal(1);
+
   // bananna in the box
   title = signal('');
   counter = signal(0);
+
+  placeholderSignal = signal('Select something');
 
   transactionService = inject(ApiTransactionService);
 
@@ -62,8 +79,11 @@ export class TransactionContainerComponent implements OnInit {
   // no need a constructor in service and actually no need a service!
   protected fetchEntity$: Observable<any>;
   private _fetchEntity = fetchEntity();
+    placeholder: any;
+    options: any;
 
-  onTriggerEntityFetch(): void {
+  onTriggerEntityFetch(e): void {
+    console.log('Trigger Entity Fetch', e);
     this.fetchEntity$ = this._fetchEntity();
   }
 
@@ -110,5 +130,9 @@ export class TransactionContainerComponent implements OnInit {
       this.selectedDate ? this.selectedDate.toISOString() : null
     );
   };
+
+  onChange(page: number) {
+    console.log(`onChange:`, page)
+  }
   
 }

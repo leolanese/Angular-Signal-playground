@@ -57,6 +57,10 @@ http://localhost:3001/swagger-ui
 > Service and injector best practice:
 I'm keeping the component clean and dependency injection free. I'm using closure to be able to store the injected HttpClient and ActivatedRoute inside the closure scope and still use values in the returned function. Leveraging the inject() function outside the constructor phase. 
 
+
+> The `TransactionContainer` incorporates the `PaginationComponent` and binds its currentPage signal to the page model of the `PaginationComponent` using the banana-in-a-box syntax ([(page)]="currentPage") = bidirectional synchronization between the PaginationComponent’s page signal and the TransactionContainer's currentPage signal
+
+
 ----
 
 ### Design View / Diferent viewports 
