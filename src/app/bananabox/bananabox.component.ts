@@ -16,7 +16,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output, model } from 
     <hr />
 
     <h2>Signal-based components with model()</h2>
-    <p>checked {{ checked() }}</p>
+    <p>Checked value: {{ checked() }}</p>
     <button (click)="onToggle()">Click to toggle</button>  
     
 

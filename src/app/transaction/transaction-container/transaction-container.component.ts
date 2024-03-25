@@ -12,7 +12,7 @@ import { BananaboxComponent } from '../../bananabox/bananabox.component';
   template: `
     <div>
 
-      <h1>Title: {{ title() }} - Counter: {{counter()}}</h1>
+      <h3>Title: {{ title() }} - Counter: {{counter()}}</h3>
       <app-bananabox 
         [(title)]="title" 
         [(counter)]="counter" />
