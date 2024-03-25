@@ -18,5 +18,5 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  pageTitle = 'Angular Vyne test';
+  pageTitle = 'Angular test';
 }

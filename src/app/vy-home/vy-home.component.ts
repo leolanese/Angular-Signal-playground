@@ -9,5 +9,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VyHomeComponent {
-  pageTitle = 'Vyne Home Component'
+  pageTitle = 'Home Component'
 }

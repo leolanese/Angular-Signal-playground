@@ -9,5 +9,5 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   styleUrl: './vy-header.component.scss'
 })
 export class VyHeaderComponent {
-  pageTitle = 'Angular Vyne test';
+  pageTitle = 'Angular test';
 }

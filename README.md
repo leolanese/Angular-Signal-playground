@@ -2,11 +2,7 @@
 
 ## Description
 
-> Angular App Transaction test for Vyne. 
-
-## Adictional COnsiderations
-
-> Task Time box: it took 1/2 day = 4 hours. There is margin for improvements. 
+> Angular App Transaction test using Signals
 
 -----
 
@@ -29,7 +25,7 @@ http://localhost:3001/swagger-ui
 
 ----
 
-## Essential Corporate Vyne colours pattern (global styles)
+## Essential Corporate colours pattern (global styles)
 
 ```js
 // styles.scss

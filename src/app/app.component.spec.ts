@@ -20,10 +20,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'Angular Vyne test'`, () => {
+  it(`should have as title 'Angular test'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.pageTitle).toEqual('Angular Vyne test');
+    expect(app.pageTitle).toEqual('Angular test');
   });
 
   it('should render title', () => {
