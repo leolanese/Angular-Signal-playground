@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ToggleButtonComponent } from './toggle-button.component';
+import { BananaboxComponent } from './bananabox.component';
 
-describe('ToggleButtonComponent', () => {
-  let component: ToggleButtonComponent;
-  let fixture: ComponentFixture<ToggleButtonComponent>;
+describe('BananaboxComponent', () => {
+  let component: BananaboxComponent;
+  let fixture: ComponentFixture<BananaboxComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ToggleButtonComponent]
+      imports: [BananaboxComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ToggleButtonComponent);
+    fixture = TestBed.createComponent(BananaboxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

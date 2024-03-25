@@ -3,14 +3,14 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { NgFor, NgClass, NgIf, CommonModule } from '@angular/common';
 import { ApiTransactionService } from '../../services/api-transaction.service';
 import { DatePipe } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, Subscription, of, from, catchError, throwError, tap} from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'vy-transaction-list',
   standalone: true,
-  imports: [CommonModule, NgClass, NgFor, NgIf, DatePipe, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, NgClass, NgFor, NgIf, DatePipe, ReactiveFormsModule],
   styleUrl: './transaction-list.component.scss',
   templateUrl: './transaction-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -23,11 +23,20 @@ export class TransactionListComponent implements OnInit {
   selectedStatus: string | null = '';
 
   ChildSignalTransactionsFromObservable: Signal<any> | undefined;
+  selectedBanana: string = 'initial banana';
 
   @Input() ChildEmptyMessage: string = '';
-  @Input() ChildTransactions$: Observable<any[]> | undefined;
+  @Input() ChildTransactions$!: Observable<any[]> | undefined;
 
   @Input() ChildSignalTransactions: Observable<any> | undefined;
+
+  // old angular
+  @Input() myValue: any;
+  @Output() myValueChange = new EventEmitter<any>();
+  
+  @Input() bananaValue: string = '';
+  @Output() bananaValueChanged: EventEmitter<string> = new EventEmitter<string>();
+  @Output() bananaSelected: EventEmitter<string> = new EventEmitter<string>();
   
   @Output() ChildStatusChanged = new EventEmitter<string>();
   @Output() ChildDateChanged = new EventEmitter<string>();
@@ -46,13 +55,18 @@ export class TransactionListComponent implements OnInit {
     this.ChildSignalTransactionsFromObservable = toSignal(this.ChildTransactions$, {rejectErrors: true}) as Signal<any> | undefined;
   }
 
+  onBananaChange(newValue: string) {
+    this.bananaValue = newValue;
+    this.bananaValueChanged.emit(newValue);
+  }
+
   // Observable table
   childData$ = from(this.transactionService.getFilteredTransactions(1, 5, 'CANCEL', '')).pipe(
     tap(data => console.log('Data from service:', data)),
     catchError(() => throwError(() => new Error('Error getting transactions')))
   );
 
-  // from observable tp Signal
+  // from observable to Signal
   filteredTransactionsFromObservableToSignal = toSignal(this.childData$, {rejectErrors: true}) as Signal<any> | undefined;
 
   onStatusChanged(selectedStatus: string): void {

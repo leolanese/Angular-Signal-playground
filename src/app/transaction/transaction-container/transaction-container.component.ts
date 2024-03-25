@@ -1,29 +1,33 @@
 import { Transaction } from './../../models/vy-models';
-import { ChangeDetectionStrategy, Component, OnInit, Signal, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Signal, computed, inject, signal } from '@angular/core';
 import { TransactionListComponent } from "../transaction-list/transaction-list.component";
 import { ApiTransactionService } from '../../services/api-transaction.service';
 import { BehaviorSubject, Observable, catchError, from, of, tap, throwError } from 'rxjs';
+import { BananaboxComponent } from '../../bananabox/bananabox.component';
 
 @Component({
   selector: 'vy-transaction-container',
   standalone: true,
+  imports: [TransactionListComponent, BananaboxComponent],
   template: `
     <div>
-        <vy-transaction-list
- 
-          [ChildTransactions$]="ParentTransactions$"
-          [ChildEmptyMessage]="ParentEmptyMessage"
 
-          [ChildSignalTransactions]="ParentSignalTransactions"
+      <h1>Title: {{ title() }} - Counter: {{counter()}}</h1>
+      <app-bananabox 
+        [(title)]="title" 
+        [(counter)]="counter" />
 
-          (ChildStatusChanged)="onStatusChanged($event)"
-          (ChildDateChanged)="onDateChanged($event)"
-          (ChildSelectedTransaction)="onSelectedTransactionFromList($event)"
-          
-        ></vy-transaction-list>
+      <vy-transaction-list
+        [ChildTransactions$]="ParentTransactions$"
+        [ChildEmptyMessage]="ParentEmptyMessage"
+
+        [ChildSignalTransactions]="ParentSignalTransactions"
+
+        (ChildStatusChanged)="onStatusChanged($event)"
+        (ChildDateChanged)="onDateChanged($event)"
+        (ChildSelectedTransaction)="onSelectedTransactionFromList($event)" />
     </div>
   `,
-  imports: [TransactionListComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransactionContainerComponent implements OnInit {
@@ -41,6 +45,10 @@ export class TransactionContainerComponent implements OnInit {
   // hardcode page size to 5
   currentPage = 1;
   pageSize = 5;
+
+  // bananna in the box
+  title = signal('');
+  counter = signal(0);
 
   transactionService = inject(ApiTransactionService);
 
