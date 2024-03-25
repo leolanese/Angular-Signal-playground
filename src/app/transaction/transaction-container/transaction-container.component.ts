@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <div>
 
+    <h2>Entity instead Service with inject()</h2>
     <button (click)="onTriggerEntityFetch()">Trigger Entity Fetch</button>
     <div>{{ fetchEntity$ | async | json }}</div>
 
