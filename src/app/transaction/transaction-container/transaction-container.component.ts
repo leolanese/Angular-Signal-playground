@@ -1,16 +1,21 @@
+import { fetchEntity } from '../../services/fetchEntity';
 import { Transaction } from './../../models/vy-models';
 import { ChangeDetectionStrategy, Component, OnInit, Signal, computed, inject, signal } from '@angular/core';
 import { TransactionListComponent } from "../transaction-list/transaction-list.component";
 import { ApiTransactionService } from '../../services/api-transaction.service';
-import { BehaviorSubject, Observable, catchError, from, of, tap, throwError } from 'rxjs';
+import { Observable, catchError, from, of, tap, throwError } from 'rxjs';
 import { BananaboxComponent } from '../../bananabox/bananabox.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'vy-transaction-container',
   standalone: true,
-  imports: [TransactionListComponent, BananaboxComponent],
+  imports: [CommonModule, TransactionListComponent, BananaboxComponent],
   template: `
     <div>
+
+    <button (click)="onTriggerEntityFetch()">Trigger Entity Fetch</button>
+    <div>{{ fetchEntity$ | async | json }}</div>
 
       <h3>Title: {{ title() }} - Counter: {{counter()}}</h3>
       <app-bananabox 
@@ -51,6 +56,15 @@ export class TransactionContainerComponent implements OnInit {
   counter = signal(0);
 
   transactionService = inject(ApiTransactionService);
+
+  // service and injector best practice:
+  // no need a constructor in service and actually no need a service!
+  protected fetchEntity$: Observable<any>;
+  private _fetchEntity = fetchEntity();
+
+  onTriggerEntityFetch(): void {
+    this.fetchEntity$ = this._fetchEntity();
+  }
 
   ngOnInit(): void {
     // Call filteredTransactionsSignal to populate ParentTransactions

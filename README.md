@@ -54,6 +54,8 @@ http://localhost:3001/swagger-ui
 
 > Implemented `.browserslistrc` to ensure that your `CSS code is compatible with the browsers that you want to support`. This is a great way to ensure that you don't have to worry about browser compatibility issues. The list can be improved for this project but I wanted to start with a simple setup based on the Global Stats StatCounter (`https://gs.statcounter.com/`)
 
+> Service and injector best practice:
+I'm keeping the component clean and dependency injection free. I'm using closure to be able to store the injected HttpClient and ActivatedRoute inside the closure scope and still use values in the returned function. Leveraging the inject() function outside the constructor phase. 
 
 ----
 
