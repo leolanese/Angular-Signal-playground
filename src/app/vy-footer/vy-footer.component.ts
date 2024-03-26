@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'vy-footer',
@@ -7,7 +7,8 @@ import { Component } from '@angular/core';
   template: `
     <footer>Footer Content</footer>
   `,
-  styleUrl: './vy-footer.component.scss'
+  styleUrl: './vy-footer.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VyFooterComponent {
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -10,7 +10,8 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
       {{ pageTitle}}
     </header>
   `,
-  styleUrl: './vy-header.component.scss'
+  styleUrl: './vy-header.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VyHeaderComponent {
   pageTitle = 'Header';
