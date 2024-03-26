@@ -23,5 +23,4 @@ import { Component, model, signal } from '@angular/core';
 export class Html5ModelsComponent {
   placeholderChild = model('Select an option');
   optionsChild = model<string[]>(['United States', 'Canada', 'India', 'Australia']);
-
 }

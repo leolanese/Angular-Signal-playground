@@ -8,5 +8,12 @@ export const routes: Routes = [
       import('./vy-home/vy-home.component')
       .then(c => c.VyHomeComponent)
   },
-  { path: '**', component: PageNotFoundComponent }
+  {
+    path: 'signal',
+    loadComponent: () => 
+      import('./vy-home/vy-home.component')
+      .then(c => c.VyHomeComponent)
+  },
+  { path: '**', component: PageNotFoundComponent },
+  { path: '', redirectTo: 'landing', pathMatch: 'full' },
 ];

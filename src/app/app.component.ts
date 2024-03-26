@@ -7,16 +7,19 @@ import { VySideComponent } from './vy-side/vy-side.component';
 import { VyFooterComponent } from './vy-footer/vy-footer.component';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, 
+  imports: [
+    CommonModule, 
     VyHeaderComponent, VyNavComponent, VyContentComponent, 
     VySideComponent, VyFooterComponent,
-    RouterOutlet, RouterLink, RouterLinkActive],
+    RouterOutlet, RouterLink, RouterLinkActive,
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  pageTitle = 'Angular test';
+  pageTitle = 'App Component';
 }

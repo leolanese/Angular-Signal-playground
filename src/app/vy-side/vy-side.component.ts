@@ -4,9 +4,11 @@ import { Component } from '@angular/core';
   selector: 'vy-side',
   standalone: true,
   imports: [],
-  templateUrl: './vy-side.component.html',
+  template: `
+    <aside class="side">{{ componentTitle }}</aside>
+  `,
   styleUrl: './vy-side.component.scss'
 })
 export class VySideComponent {
-
+  componentTitle = 'Sidebar Component'
 }

@@ -4,7 +4,9 @@ import { Component } from '@angular/core';
   selector: 'vy-footer',
   standalone: true,
   imports: [],
-  templateUrl: './vy-footer.component.html',
+  template: `
+    <footer>Footer Content</footer>
+  `,
   styleUrl: './vy-footer.component.scss'
 })
 export class VyFooterComponent {
