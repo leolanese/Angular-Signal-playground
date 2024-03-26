@@ -17,9 +17,36 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     VySideComponent, VyFooterComponent,
     RouterOutlet, RouterLink, RouterLinkActive,
   ],
-  templateUrl: './app.component.html',
+  template: `
+    <router-outlet name="outlet1Router">
+      <div>
+        <h1>outlet1</h1>
+      </div>
+    </router-outlet>  
+
+    <router-outlet name="outlet2Router">
+      <div>
+        <h1>outlet2</h1>
+      </div>
+    </router-outlet>
+
+    <router-outlet>
+      <div class="container">
+        <div>
+          <h1>outlet0</h1>
+        </div>
+        <vy-header></vy-header> 
+        <vy-nav></vy-nav>
+        <vy-content>
+            
+        </vy-content>
+        <vy-side></vy-side>
+        <vy-footer></vy-footer>
+      </div>
+    </router-outlet>
+  `,
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  pageTitle = 'App Component';
+  componentTitle = 'App Component';
 }
