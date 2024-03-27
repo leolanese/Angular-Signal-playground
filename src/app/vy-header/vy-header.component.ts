@@ -23,7 +23,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
         <li class="nav-item">
           <a class="nav-link"
-            [routerLink]="[{ outlets: { outlet2Router: ['outlet2Path'] } }]"
+            [routerLink]="[{ outlets: { outlet2Router: ['outlet1Path'] } }]"
             routerLinkActive="active">outlet2</a>
         </li>
 
