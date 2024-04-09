@@ -1,8 +1,8 @@
-# Angular Signal Test
+# Angular Signal Tests
 
 ## Description
 
-> Angular App Playground test using Signals & modedern angular techniques
+> Angular 17 App Playground test using Signals & modedern angular techniques
 
 -----
 
