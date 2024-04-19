@@ -6,46 +6,29 @@ import { VyContentComponent } from './vy-content/vy-content.component';
 import { VySideComponent } from './vy-side/vy-side.component';
 import { VyFooterComponent } from './vy-footer/vy-footer.component';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-
+import { SignalBehaviour } from "./signalBehaviour/signalBehaviour.component";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    CommonModule, 
-    VyHeaderComponent, VyNavComponent, VyContentComponent, 
-    VySideComponent, VyFooterComponent,
-    RouterOutlet, RouterLink, RouterLinkActive,
-  ],
-  template: `
-    <router-outlet name="outlet1Router">
-      <div>
-        <h1>outlet1</h1>
-      </div>
-    </router-outlet>  
-
-    <router-outlet name="outlet2Router">
-      <div>
-        <h1>outlet2</h1>
-      </div>
-    </router-outlet>
-
+    selector: 'app-root',
+    standalone: true,
+    template: `
     <router-outlet>
       <div class="container">
-        <div>
-          <h1>outlet0</h1>
-        </div>
-        <vy-header></vy-header> 
-        <vy-nav></vy-nav>
-        <vy-content>
-            
-        </vy-content>
-        <vy-side></vy-side>
-        <vy-footer></vy-footer>
+        <vy-nav />
+        <vy-content />
+        <vy-side />
+        <vy-footer />
       </div>
     </router-outlet>
   `,
-  styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    imports: [
+        CommonModule,
+        VyHeaderComponent, VyNavComponent, VyContentComponent,
+        VySideComponent, VyFooterComponent,
+        RouterOutlet, RouterLink, RouterLinkActive,
+        SignalBehaviour
+    ]
 })
 export class AppComponent {
   componentTitle = 'App Component';

@@ -2,13 +2,13 @@
 
 ## Description
 
-> Angular 17 App Playground test using Signals & mododern Angular techniques
+> Angular 17 App Playground tests. Using Signals and trending Angular techniques
 
 -----
 
-# Run App
+## Run App
 
-```
+```js
 // npm run storybook
 // http://localhost:6006
 yarn storybook --debug-webpack
@@ -18,12 +18,16 @@ yarn storybook --debug-webpack
 ng serve -o --poll=2000
 ```
 
-```
-// To Speed-up Development I setup a local Mock API server with CORS
-http://localhost:3001/swagger-ui
+## mock the API
+
+```js
+// To run some parsing test we need to mock the API
+// run mock API server using Mockoon (or similar) 
+// use: `app/mocks/mockTranslations` with `test-ui` base url
+http://localhost:3000/test-ui
 ```
 
-----
+---
 
 ## Essential Corporate colours pattern (global styles)
 
@@ -40,9 +44,9 @@ http://localhost:3001/swagger-ui
 }
 ```
 
-----
+---
 
-## Responsive Layout Consideration 
+## Responsive Layout Consideration
 
 > Created a `3x3 grid` with named areas for the: header, navigation, content, sidebar, and footer (grid-template-areas)
 
@@ -60,10 +64,9 @@ I'm keeping the component clean and dependency injection free. I'm using closure
 
 > The `TransactionContainer` incorporates the `PaginationComponent` and binds its currentPage signal to the page model of the `PaginationComponent` using the banana-in-a-box syntax ([(page)]="currentPage") = bidirectional synchronization between the PaginationComponent’s page signal and the TransactionContainer's currentPage signal
 
+---
 
-----
-
-### Design View / Diferent viewports 
+## Design View / Diferent viewport
 
 ```html
 // Small Screens (Mobile)
@@ -103,7 +106,7 @@ I'm keeping the component clean and dependency injection free. I'm using closure
 +-----------+-----------+-----------+
 ```
 
-----
+---
 
 ### Architecture considerations
 
@@ -113,7 +116,7 @@ I'm keeping the component clean and dependency injection free. I'm using closure
 
 > `Lazy Loading` is used to load the modules only when they are needed. This is a great way to improve performance and reduce the amount of work
 
-----
+---
 
 ## Development server
 
@@ -140,6 +143,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ---
+
 ### :100: <i>Thanks!</i>
 #### Now, don't be an stranger. Let's stay in touch!
 

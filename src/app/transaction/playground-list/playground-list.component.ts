@@ -1,21 +1,21 @@
-import { Transaction, Transactions } from './../../models/vy-models';
+import { Transaction, Transactions } from '../../models/vy-models';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Signal, computed, inject } from '@angular/core';
 import { NgFor, NgClass, NgIf, CommonModule } from '@angular/common';
 import { ApiTransactionService } from '../../services/api-transaction.service';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subscription, of, from, catchError, throwError, tap} from 'rxjs';
+import { Observable, from, catchError, throwError, tap} from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'vy-transaction-list',
+  selector: 'playground-list',
   standalone: true,
   imports: [CommonModule, FormsModule, NgClass, NgFor, NgIf, DatePipe, ReactiveFormsModule],
-  styleUrl: './transaction-list.component.scss',
-  templateUrl: './transaction-list.component.html',
+  styleUrl: './playground-list.component.scss',
+  templateUrl: './playground-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TransactionListComponent implements OnInit {
+export class PlaygroundListComponent implements OnInit {
   pageTitle = 'Transaction List';
   filterForm: FormGroup;
   statusValues: string[] = ['CREATED', 'FAILED', 'SETTLED', 'COMPLETED', 'CAPTURED'];

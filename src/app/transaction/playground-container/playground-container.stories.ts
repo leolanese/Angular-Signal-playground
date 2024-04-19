@@ -1,15 +1,14 @@
-import { TransactionContainerComponent } from './transaction-container.component';
-import { moduleMetadata } from '@storybook/angular';
+import { PlaygroundContainerComponent } from './playground-container.component';
 import { CommonModule } from '@angular/common';
 import { importProvidersFrom } from '@angular/core';
-import { ApiTransactionService } from './../../services/api-transaction.service';
+import { ApiTransactionService } from '../../services/api-transaction.service';
 import { MockTransactionData } from '../../models/mocks/mockTransactions';
 import { HttpClientModule } from '@angular/common/http';
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular';
 
 export default {
-  title: 'Components/vy-transaction-container',
-  component: TransactionContainerComponent,
+  title: 'Components/playground-container',
+  component: PlaygroundContainerComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -23,9 +22,9 @@ export default {
       { provide: ApiTransactionService, useClass: MockTransactionData } 
     ],
   }
-} as Meta<TransactionContainerComponent>;
+} as Meta<PlaygroundContainerComponent>;
 
-type MyComponentStory = StoryObj<TransactionContainerComponent>;
+type MyComponentStory = StoryObj<PlaygroundContainerComponent>;
 const Template: MyComponentStory = {
   args: {},
 };

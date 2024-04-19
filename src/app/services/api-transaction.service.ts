@@ -6,8 +6,8 @@ import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable({providedIn: 'root'})
 export class ApiTransactionService {
-  // private url = 'http://localhost:8080/api/transactions';
-  private apiUrl = 'http://localhost:3001/swagger-ui';
+  // private apiUrl = 'http://localhost:8080/api/transactions';
+  private apiUrl = 'http://localhost:3000/test-ui';
 
   http = inject(HttpClient);
 
@@ -16,10 +16,9 @@ export class ApiTransactionService {
     date: null
   });
 
-  
-  getFilteredTransactions = (page: number, pageSize: number,
-                                    status: string, dates: string)
-                                    : Observable<Transactions> => {
+    getFilteredTransactions = (page: number, pageSize: number,
+                             status: string, dates: string)
+                          : Observable<Transactions> => {
 
     let url = `${this.apiUrl}?page=${page}&pageSize=${pageSize}`;
     if (status) url += `&status=${status}`;
@@ -77,7 +76,7 @@ export class ApiTransactionService {
     if (err.error instanceof ErrorEvent) {
       errorMessage = `An error occurred: ${err.error.message}`;
     } else if (err.status === 0) {
-      errorMessage = 'Server unreachable. Please check your internet connection.';
+      errorMessage = 'Server unreachable. Please check your internet connection or server status.';
     } else {
       errorMessage = `Server returned code: ${err.status}, error: ${err.error?.message || 'Unknown error'}`;
     }

@@ -1,23 +1,29 @@
 import { fetchEntity } from '../../services/fetchEntity';
-import { Transaction } from './../../models/vy-models';
+import { Transaction } from '../../models/vy-models';
 import { ChangeDetectionStrategy, Component, OnInit, Signal, computed, inject, model, signal } from '@angular/core';
-import { TransactionListComponent } from "../transaction-list/transaction-list.component";
+import { PlaygroundListComponent   } from "../playground-list/playground-list.component";
 import { ApiTransactionService } from '../../services/api-transaction.service';
 import { Observable, catchError, from, of, tap, throwError } from 'rxjs';
 import { BananaboxComponent } from '../../bananabox/bananabox.component';
 import { CommonModule } from '@angular/common';
 import { PaginationComponent } from '../../pagination/pagination.component';
 import { Html5ModelsComponent } from "../../html5-models/html5-models.component";
+import { SignalBehaviour } from "../../signalBehaviour/signalBehaviour.component";
 
 @Component({
-    selector: 'vy-transaction-container',
+    selector: 'playground-container',
     standalone: true,
     template: `
     <div>
+      <hr />
+
+      <h2>Signal works based on stable values</h2>
+      <signal-behaviour />
+
+      <hr />
 
       <app-html5-models
-          [(placeholderChild)]="placeholderSignal"
-           />
+          [(placeholderChild)]="placeholderSignal" />
 
       <app-pagination 
           [(pageChild)]="currentPageSignal"
@@ -32,7 +38,7 @@ import { Html5ModelsComponent } from "../../html5-models/html5-models.component"
         [(title)]="title" 
         [(counter)]="counter" />
 
-      <vy-transaction-list
+      <playground-list
         [ChildTransactions$]="ParentTransactions$"
         [ChildEmptyMessage]="ParentEmptyMessage"
 
@@ -44,15 +50,16 @@ import { Html5ModelsComponent } from "../../html5-models/html5-models.component"
     </div>
   `,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, TransactionListComponent,
-        BananaboxComponent, PaginationComponent, Html5ModelsComponent]
+    imports: [CommonModule,
+              BananaboxComponent, PaginationComponent, Html5ModelsComponent, 
+              SignalBehaviour, PlaygroundListComponent]
 })
-export class TransactionContainerComponent implements OnInit {
+export class PlaygroundContainerComponent implements OnInit {
 
   ParentTransactions$: Observable<any> | undefined;
   ParentSignalTransactions: Observable<any> | undefined;
 
-  ParentEmptyMessage = 'Empty filter transaction message';
+  ParentEmptyMessage = 'Empty filter message';
   ParentErrorMessage = '';
 
   statusValues: string[] = ['CREATED', 'FAILED', 'SETTLED', 'COMPLETED', 'CAPTURED'];

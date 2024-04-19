@@ -1,14 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TransactionContainerComponent } from '../transaction/transaction-container/transaction-container.component';
+import { PlaygroundContainerComponent } from '../transaction/playground-container/playground-container.component';
 
 @Component({
   selector: 'vy-content',
   standalone: true,
-  imports: [TransactionContainerComponent],
+  imports: [PlaygroundContainerComponent],
   template: `
     <main class="content">{{ componentTitle }}</main>
     
-    <vy-transaction-container></vy-transaction-container>
+    <playground-container></playground-container>
+
+    <hr />
   `,
   styleUrl: './vy-content.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

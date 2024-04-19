@@ -1,5 +1,5 @@
 import { Directive, inject } from '@angular/core';
-import { TransactionContainerComponent } from '../transaction/transaction-container/transaction-container.component';
+import { TransactionContainerComponent } from '../transaction/playground-container/playground-container.component';
 
 @Directive({
     selector: '[appUsersOptions]',
